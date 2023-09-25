@@ -1,0 +1,23 @@
+// sample
+{
+  "Comment": "A description of my state machine",
+  "StartAt": "BatchUpdateFindings",
+  "States": {
+    "BatchUpdateFindings": {
+      "Type": "Task",
+      "End": true,
+      "Parameters": {
+        "FindingIdentifiers": [
+          {
+            "Id.$": "$.detail.findings[0].Id",
+            "ProductArn.$": "$.detail.findings[0].ProductArn"
+          }
+        ],
+        "Workflow": {
+          "Status": "NOTIFIED"
+        }
+      },
+      "Resource": "arn:aws:states:::aws-sdk:securityhub:batchUpdateFindings"
+    }
+  }
+}

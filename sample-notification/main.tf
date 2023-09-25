@@ -1,0 +1,3 @@
+module "notifications" {
+  source = "./notifications"
+}
