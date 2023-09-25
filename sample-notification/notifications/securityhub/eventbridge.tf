@@ -22,3 +22,5 @@ resource "aws_cloudwatch_event_target" "main" {
   arn  = each.value.arn
   rule = aws_cloudwatch_event_rule.main.name
 }
+
+# policy

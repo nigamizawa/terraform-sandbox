@@ -1,6 +1,9 @@
 locals {
-  pagerduty = {
-    endpoint = ""
+  subscriptions = {
+    pagerduty = {
+      endpoint = ""
+    }
+    email = {}
   }
 }
 
@@ -8,10 +11,18 @@ resource "aws_sns_topic" "main" {
   name = "${var.name}-events"
 }
 
+resource "aws_sns_topic_subscription" "pagerduty" {
+  topic_arn = aws_sns_topic.name.arn
+  protocol  = "http" #https?
+  endpoint  = local.pagerduty.endpoint
+}
+
 resource "aws_sns_topic_policy" "main" {
   arn    = aws_sns_topic.main.arn
   policy = data.aws_iam_policy_document.sns_topic_policy.json
 }
+
+
 
 data "aws_iam_policy_document" "sns_topic_policy" {
   statement {
@@ -51,10 +62,4 @@ data "aws_iam_policy_document" "sns_topic_policy" {
       identifiers = ["events.amazonaws.com"]
     }
   }
-}
-
-resource "aws_sns_topic_subscription" "pagerduty" {
-  topic_arn = aws_sns_topic.name.arn
-  protocol  = "http" #https?
-  endpoint  = local.pagerduty.endpoint
 }

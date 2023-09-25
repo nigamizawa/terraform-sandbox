@@ -9,5 +9,6 @@ locals {
       "Repository"     = "nigamizawa/terraform-sandbox"
       "Repository_url" = "https://github.com/nigamizawa/terraform-sandbox"
     }
+    project_name = ""
   }
 }
